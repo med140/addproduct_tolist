@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private cart:CartService) { }
+  constructor(private cart:CartService,private accountService:AuthenticationService,private router:Router) { }
 public totalitem=0;
   ngOnInit(): void {
     this.cart.getproduct().subscribe(res=>{
@@ -16,5 +18,8 @@ public totalitem=0;
 
     })
   }
-
+  logout() {
+    this.accountService.logout();
+    this.router.navigate(['/login']);
+  }
 }
